@@ -10,179 +10,70 @@
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
   </aside>
-  <!-- /.control-sidebar -->
+  <!-- /.control-sidebar -->  
 </div>
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="<?= base_url('assets/AdminLTE/') ?>plugins/jquery/jquery.min.js"></script>
+<script src="<?= base_url ('assets/AdminLTE/') ?>plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
-<script src="<?= base_url('assets/AdminLTE/') ?>plugins/jquery-ui/jquery-ui.min.js"></script>
+<script src="<?= base_url ('assets/AdminLTE/') ?>plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
-<script src="<?= base_url('assets/AdminLTE/') ?>plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="<?= base_url ('assets/AdminLTE/') ?>plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- ChartJS -->
-<script src="<?= base_url('assets/AdminLTE/') ?>plugins/chart.js/Chart.min.js"></script>
+<script src="<?= base_url ('assets/AdminLTE/') ?>plugins/chart.js/Chart.min.js"></script>
 <!-- Sparkline -->
-<script src="<?= base_url('assets/AdminLTE/') ?>plugins/sparklines/sparkline.js"></script>
+<script src="<?= base_url ('assets/AdminLTE/') ?>plugins/sparklines/sparkline.js"></script>
 <!-- JQVMap -->
-<script src="<?= base_url('assets/AdminLTE/') ?>plugins/jqvmap/jquery.vmap.min.js"></script>
-<script src="<?= base_url('assets/AdminLTE/') ?>plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<script src="<?= base_url ('assets/AdminLTE/') ?>plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="<?= base_url ('assets/AdminLTE/') ?>plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
 <!-- jQuery Knob Chart -->
-<script src="<?= base_url('assets/AdminLTE/') ?>plugins/jquery-knob/jquery.knob.min.js"></script>
+<script src="<?= base_url ('assets/AdminLTE/') ?>plugins/jquery-knob/jquery.knob.min.js"></script>
 <!-- daterangepicker -->
-<script src="<?= base_url('assets/AdminLTE/') ?>plugins/moment/moment.min.js"></script>
-<script src="<?= base_url('assets/AdminLTE/') ?>plugins/daterangepicker/daterangepicker.js"></script>
+<script src="<?= base_url ('assets/AdminLTE/') ?>plugins/moment/moment.min.js"></script>
+<script src="<?= base_url ('assets/AdminLTE/') ?>plugins/daterangepicker/daterangepicker.js"></script>
 <!-- Tempusdominus Bootstrap 4 -->
-<script src="<?= base_url('assets/AdminLTE/') ?>plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="<?= base_url ('assets/AdminLTE/') ?>plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- Summernote -->
-<script src="<?= base_url('assets/AdminLTE/') ?>plugins/summernote/summernote-bs4.min.js"></script>
+<script src="<?= base_url ('assets/AdminLTE/') ?>plugins/summernote/summernote-bs4.min.js"></script>
 <!-- overlayScrollbars -->
-<script src="<?= base_url('assets/AdminLTE/') ?>plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<script src="<?= base_url ('assets/AdminLTE/') ?>plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
-<script src="<?= base_url('assets/AdminLTE/') ?>dist/js/adminlte.js"></script>
+<script src="<?= base_url ('assets/AdminLTE/') ?>dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="<?= base_url('assets/AdminLTE/') ?>dist/js/demo.js"></script>
+<script src="<?= base_url ('assets/AdminLTE/') ?>dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="<?= base_url('assets/AdminLTE/') ?>dist/js/pages/dashboard.js"></script>
+<script src="<?= base_url ('assets/AdminLTE/') ?>dist/js/pages/dashboard.js"></script>
 
 <script>
 
-	var mymap = L.map('mapid').setView([-5.415785, 105.230726], 12);
+    var mymap = L.map('mapid').setView([-5.415785, 105.230726], 12);
+    
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery ©️ <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
+    }).addTo(mymap);
 
-	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-		maxZoom: 18,
-		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-		id: 'mapbox/streets-v11',
-		tileSize: 512,
-		zoomOffset: -1
-	}).addTo(mymap);
+    <?php foreach ($wisata as $r) : ?>
+        var marker  = L.marker([<?= $r['cord']; ?>]).addTo(mymap);
+        marker.bindPopup(" <img src='<?= base_url('gambar/') . $r['gambar'] ?>' width='200px'  height='200px'/> <br> <?= $r[('nama')]; ?> <br> Jam Buka : <?= $r['jam']; ?> <br> Harga : <?= $r['harga']; ?> <br> No Telp : <?= $r['telp']; ?> <br> Alamat : <?= $r['alamat']; ?> ").openPopup();
+    
 
-    var marker = L.marker([-5.415785, 105.230726]).bindPopup('<h1>Lembah Hijau</h1><p>Jam Buka	 : 08.00 - 17.00 WIB<br>Tiket Masuk	: Rp15.000 - Rp55.000<br>No. Telepon	: (0721) 8050000<br>Alamat		: Jl. Raden Imba Kesuma Ratu, Sukadana Ham Tanjung Karang Barat,<br>Bandar Lampung</p><img src = lembahhijau.jpg width = "300" height = "200"/>').addTo(mymap); 
-    var marker = L.marker([-5.421992, 105.231711]).bindPopup('<h1>Alam Wawai</h1><p>Jam Buka	: 10.00 - 17.00 WIB<br>Tiket Masuk	: Rp20.000<br>No. Telepon	: 0811-7233-366<br>Alamat		: Jl. H. Hasan Rais, Sukadana Ham, Kec. Tj. Karang Barat,<br>Kota Bandar Lampung, Lampung 35116</p><img src = alamwawai.jpg width = "300" height = "200"/>').addTo(mymap);
-    var marker = L.marker([-5.434868, 105.226211]).bindPopup('<h1>Bumi Kedaton</h1><p>Jam Buka	: 08.30 - 17.00 WIB<br>Tiket Masuk	: Rp8.000 - Rp25.000<br>No. Telepon	: (0721) 7488047<br>Alamat		: Jalan W.A Rahman Ni 1,2,3, Batu Putuk, Kec. Tlk. Betung Utara,<br>Kota Bandar Lampung, Lampung 35238</p><img src = bumikedaton.jpg width = "300" height = "200"/>').addTo(mymap);
-    var marker = L.marker([-5.399817, 105.191280]).bindPopup('<h1>Lengkung Langit</h1><p>Jam Buka	: 08.00 - 22.00 WIB<br>Tiket Masuk	: Rp10.000<br>Alamat		: Pinang Jaya, Kemiling, Bandar Lampung City,<br>Lampung 35153</p><img src = lengkunglangit.jpg width = "300" height = "200"/>').addTo(mymap);
-    var marker = L.marker([-5.389866, 105.276447]).bindPopup('<h1>Lampung Walk</h1><p>Jam Buka	: 08.00 - 18.00 WIB<br>Tiket Masuk	: Rp30.000 - Rp40.000<br>No. Telepon	: 0853-8109-9988<br>Alamat		: Way Halim Permai, Way Halim Bandar Lampung, <br>Bandar Lampung City, Lampung 35133</p><img src = lpgwalk.jpg width = "300" height = "200"/>').addTo(mymap);
-    var marker = L.marker([-5.404374, 105.222797]).bindPopup('<h1>Bukit Sakura</h1><p>Jam Buka	: 08.00 -21.00 WIB<br>Tiket Masuk	: Rp10.000<br>No. Telepon	: 0813-4908-0755<br>Alamat		: Jl. Melati Raya, Langkapura,<br>Kota Bandar Lampung,Lampung, 35115</p><img src = bukitsakura.jpg width = "300" height = "200"/>').addTo(mymap);
-    var marker = L.marker([-5.409035, 105.210874]).bindPopup('<h1>Taman Kelinci</h1><p>Jam Buka : 08.00 - 18.00 WIB<br>Tiket Masuk : Rp7.000 - Rp10.000<br>No. Telepon : 0857-8988-8088<br>Alamat : Jalan Moh. Ali No.10, Kelurahan Kedaung, Kecamatan Kemiling, <br> Kota Bandar Lampung, 35156</p><img src = tmnkelinci.PNG width = "300" height = "200"/>').addTo(mymap);
-    var marker = L.marker([-5.432434, 105.269535]).bindPopup('<h1>Taman Wisata Hutan Kera</h1><p>Jam Buka	: 24 Jam<br>Tiket Masuk	: -<br>No. Telepon	: -<br>Alamat		: Jalan Dr Cipto Mangunkusumo, Sumur Batu, Teluk Betung Utara,<br>Kota Bandar Lampung, Lampung 35212</p><img src = monkeyforest.jpg width = "300" height = "200"/>').addTo(mymap);
-    var marker = L.marker([-5.420491, 105.228482]).bindPopup('<h1>Puncak Mas</h1><p>Jam Buka	: 08.00 - 17.00 WIB<br>Tiket Masuk	: Rp20.000<br>No. Telepon	: 0821-8115-5115<br>Alamat		: Jl. PB. Marga, Sukadana Ham, Kec. Tj. Karang Barat,<br>Kota Bandar Lampung, Lampung 35215</p><img src = puncakmas.jpg width = "300" height = "200"/>').addTo(mymap);
-    var marker = L.marker([-5.404585, 105.253401]).bindPopup('<h1>Teropong Kota Bukit Sindy</h1><p>Jam Buka	: 24 Jam<br>Tiket Masuk	: Rp10.000<br>No. Telepon	: -<br>Alamat		: Jl. Tamin, Pasir Gintung, Kec. Tj. Karang Pusat,<br>Kota Bandar Lampung, Lampung 35121</p><img src = teropongkota.jpg width = "300" height = "200"/>').addTo(mymap);
-    var marker = L.marker([-5.420949, 105.188573]).bindPopup('<h1>Taman Kupu Kupu Gita Persada</h1><p>Jam Buka : 07.00 - 17.00 WIB<br>Tiket Masuk : Rp10.000<br>No. Telepon : 0857-6464-7399 <br>Alamat : Jl. Wan Abdurrahman, Hutan, Kec. Hutan, <br> Lampung, 35158</p><img src = tmnkpukpu.jpg width = "300" height = "200"/>').addTo(mymap);
-    var marker = L.marker([-5.427303, 105.218291]).bindPopup('<h1>Air Terjun Batu Putu</h1><p>Jam Buka : 24 Jam <br>Tiket Masuk : Rp10.000<br>No. Telepon : - <br>Alamat :  Jl. Wan Abdul Rahman, Desa Batu Putu, Kecamatan Teluk Betung Barat, <br>  Kota Bandar Lampung</p><img src = arter.jpg width = "300" height = "200"/>').addTo(mymap);
-    var marker = L.marker([-5.415870, 105.193297]).bindPopup('<h1>Kampoeng Vietnam</h1><p>Jam Buka : 10.00 - 22.00 WIB<br>Tiket Masuk : Rp5.000<br>No. Telepon : - <br>Alamat :  Jl. Teuku Cik Ditiro, Sumber Agung, Kec. Kemiling,  <br>  Kota Bandar Lampung, Lampung 35156</p><img src = kampungviet.jpg width = "300" height = "200"/>').addTo(mymap);
-    var marker = L.marker([-5.424727, 105.195003]).bindPopup('<h1>Seven Selfie</h1><p>Jam Buka : 08.00 - 18.00 WIB<br>Tiket Masuk : Rp5.000<br>No. Telepon : 0812-7258-6468 <br>Alamat : Jl. Wan Abdurrahman, Batu Putuk, Kec. Telukbetung Barat,  <br> Kota Madya, Lampung 35239</p><img src = sevenselfie.png width = "300" height = "200"/>').addTo(mymap);
-    var marker = L.marker([-5.476821, 105.252593]).bindPopup('<h1>Pantai Duta Wisata</h1><p>Jam Buka : 08.00 - 22.00 WIB<br>Tiket Masuk : Rp10.000<br>No. Telepon : - <br>Alamat : Jl. Laksamana R.E.Martadinata, Teluk Betung Barat., <br>Kota Bandar Lampung, Lampung 35236</p><img src = dutawisata.jpg width = "300" height = "200"/>').addTo(mymap);
-    var marker = L.marker([-5.405627, 105.311925]).bindPopup('<h1>DMermaid Tirtayasa Waterpark</h1><p>Jam Buka : 08.00 - 18.00 WIB<br>Tiket Masuk : Rp25.000 - Rp40.000<br>No. Telepon : - <br>Alamat : Perumahan Villa Bukit Tirtayasa, Campang Raya, Tanjung Karang Timur, Campang Raya,<br> Kota Bandar Lampung, 35122</p><img src = dmermaid.jpg width = "300" height = "250"/>').addTo(mymap);
-    var marker = L.marker([-5.470805, 105.250216]).bindPopup('<h1>Pantai Puri Gading</h1><p>Jam Buka : 08.00 - 17.00 WIB<br>Tiket Masuk : Rp5.000<br>No. Telepon : - <br>Alamat : Jl. Laksamana R.E.Martadinata, Sukamaju, Tlk. Betung Barat,<br>Kota Bandar Lampung, Lampung 35231</p><img src = pantaipuri.jpg width = "300" height = "200"/>').addTo(mymap);
-
-
-    var circle = L.circle([-5.415785, 105.230726], {
+    var circle = L.circle([<?= $r['cord']; ?>], {
         color: 'red',
         fillColor: '#f03',
         fillOpacity: 0.5,
-        radius: 500
+        radius: 200
     }).addTo(mymap);
-    var circle = L.circle([-5.421992, 105.231711], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-    }).addTo(mymap);
-    var circle = L.circle([-5.434868, 105.226211], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-    }).addTo(mymap);
-    var circle = L.circle([-5.399817, 105.191280], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-    }).addTo(mymap);
-    var circle = L.circle([-5.389866, 105.276447], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-    }).addTo(mymap);
-    var circle = L.circle([-5.404374, 105.222797], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-    }).addTo(mymap);
-    var circle = L.circle([-5.409035, 105.210874], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-    }).addTo(mymap);
-    var circle = L.circle([-5.432434, 105.269535], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-    }).addTo(mymap);
-    var circle = L.circle([-5.420491, 105.228482], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-    }).addTo(mymap);
-    var circle = L.circle([-5.404585, 105.253401], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-    }).addTo(mymap);
-    var circle = L.circle([-5.420949, 105.188573], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-    }).addTo(mymap);
-    var circle = L.circle([-5.427303, 105.218291], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-    }).addTo(mymap);
-    var circle = L.circle([-5.415870, 105.193297], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-    }).addTo(mymap);
-    var circle = L.circle([-5.424727, 105.195003], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-    }).addTo(mymap);
-    var circle = L.circle([-5.476821, 105.252593], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-    }).addTo(mymap);
-    var circle = L.circle([-5.405627, 105.311925], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-    }).addTo(mymap);
-    var circle = L.circle([-5.470805, 105.250216], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-    }).addTo(mymap);
+    <?php endforeach; ?>
 
     var polygon = L.polygon([
 		[-5.3804445,105.205418],
@@ -2000,15 +1891,6 @@
 
     polygon.bindPopup("Bandar Lampung");
     var popup = L.popup()
-
-
-// jarak dari Lampung Walk menuju D'Mermaid Tirtayasa Waterpark
-    var jalur1 = [
-    [-5.389866, 105.276447],
-    [-5.405627, 105.311925]
-];
-
-var polyline = L.polyline(jalur1, {color: 'green'}).addTo(mymap).bindPopup("Lampung Walk - D'Mermaid Tirtayasa Waterpark");
 
 
     function onMapClick(e) {
